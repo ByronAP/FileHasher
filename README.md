@@ -1,2 +1,2 @@
 # FileHasher
-Simple Checksum Tool For Windows
+A Simple Checksum Tool For Windows
