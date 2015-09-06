@@ -116,8 +116,9 @@ namespace FileHasher
             groupBox3.Text = Properties.Resources.Group3Header;
             group3Label.Text = Properties.Resources.Group3Label;
             copyButton.Text = Properties.Resources.CopyButtonDefaultText;
-            compareButton.Text = Properties.Resources.CompareButtonDefaultText;
+            resultLabel.Text = Properties.Resources.ResultsLable;
             saveButton.Text = Properties.Resources.SaveButtonDefaultText;
+            compareLabel.Text = Properties.Resources.CompareLabel;
 
             saveFileDialog1.Filter = "Text|*.txt";
             saveFileDialog1.Title = Properties.Resources.SaveDialogTitle;
@@ -161,6 +162,20 @@ namespace FileHasher
 
             resultTextBox.Text = "";
             groupBox3.Enabled = false;
+        }
+
+        private void compareTextBox_TextChanged(object sender, EventArgs e)
+        {
+            if(string.IsNullOrEmpty(compareTextBox.Text))
+            {
+                compareTextBox.BackColor = System.Drawing.SystemColors.Control;
+                return;
+            }
+            if (compareTextBox.Text.ToUpper() == resultTextBox.Text.ToUpper())
+                compareTextBox.BackColor = System.Drawing.Color.LightGreen;
+            else
+                compareTextBox.BackColor = System.Drawing.Color.LightCoral;
+
         }
     }
 }

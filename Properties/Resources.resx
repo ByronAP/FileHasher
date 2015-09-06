@@ -120,7 +120,7 @@
   <data name="BrowseButtonDefaultText" xml:space="preserve">
     <value>Browse</value>
   </data>
-  <data name="CompareButtonDefaultText" xml:space="preserve">
+  <data name="CompareLabel" xml:space="preserve">
     <value>Compare</value>
   </data>
   <data name="ComputeButtonDefaultText" xml:space="preserve">
@@ -161,5 +161,15 @@
   </data>
   <data name="SaveDialogTitle" xml:space="preserve">
     <value>Save Checksum</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="filehasher" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\filehasher.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="filehasher1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\filehasher.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ResultsLable" xml:space="preserve">
+    <value>Checksum</value>
   </data>
 </root>

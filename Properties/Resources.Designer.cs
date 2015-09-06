@@ -72,9 +72,9 @@ namespace FileHasher.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Compare.
         /// </summary>
-        internal static string CompareButtonDefaultText {
+        internal static string CompareLabel {
             get {
-                return ResourceManager.GetString("CompareButtonDefaultText", resourceCulture);
+                return ResourceManager.GetString("CompareLabel", resourceCulture);
             }
         }
         
@@ -93,6 +93,26 @@ namespace FileHasher.Properties {
         internal static string CopyButtonDefaultText {
             get {
                 return ResourceManager.GetString("CopyButtonDefaultText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap filehasher {
+            get {
+                object obj = ResourceManager.GetObject("filehasher", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon filehasher1 {
+            get {
+                object obj = ResourceManager.GetObject("filehasher1", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
             }
         }
         
@@ -174,6 +194,15 @@ namespace FileHasher.Properties {
         internal static string InvalidFilenameErrorText {
             get {
                 return ResourceManager.GetString("InvalidFilenameErrorText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Checksum.
+        /// </summary>
+        internal static string ResultsLable {
+            get {
+                return ResourceManager.GetString("ResultsLable", resourceCulture);
             }
         }
         
