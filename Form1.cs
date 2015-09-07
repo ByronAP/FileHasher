@@ -1,16 +1,26 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Security.Cryptography;
+using System.Security.Principal;
 using System.Windows.Forms;
 
 namespace FileHasher
 {
     public partial class Form1 : Form
     {
+        public string arg;
         public int HashType = 0;
         public Form1()
         {
+            InitializeComponent();
+        }
+
+        public Form1(string argument)
+        {
+            arg = argument;
             InitializeComponent();
         }
 
@@ -124,6 +134,14 @@ namespace FileHasher
             saveFileDialog1.Title = Properties.Resources.SaveDialogTitle;
 
             openFileDialog1.FileName = "";
+
+            enableCMenuCheckBox.Checked = GlobalSettings.WinContextMenuEnabled;
+
+            if (!string.IsNullOrEmpty(arg))
+            {
+                filenameTextBox.Text = arg;
+                computeButton_Click(sender, e);
+            }
         }
 
         private void copyButton_Click(object sender, EventArgs e)
@@ -176,6 +194,98 @@ namespace FileHasher
             else
                 compareTextBox.BackColor = System.Drawing.Color.LightCoral;
 
+        }
+
+        private void enableCMenuCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!IsAdmin())
+            {
+                RestartElevated(arg);
+                return;
+            }
+
+            if (enableCMenuCheckBox.Checked)
+            {
+                RegistryKey regmenu = null;
+                RegistryKey regcmd = null;
+                try
+                {
+                    regmenu = Registry.ClassesRoot.CreateSubKey("*\\shell\\Checksum");
+                    if (regmenu != null)
+                        regmenu.SetValue("", "Checksum");
+                    regcmd = Registry.ClassesRoot.CreateSubKey("*\\shell\\Checksum\\command");
+                    if (regcmd != null)
+                        regcmd.SetValue("", Application.ExecutablePath + " %1");
+
+                    GlobalSettings.WinContextMenuEnabled = true;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(this, ex.ToString());
+                }
+                finally
+                {
+                    if (regmenu != null)
+                        regmenu.Close();
+                    if (regcmd != null)
+                        regcmd.Close();
+                }
+
+            }
+            else
+            {
+                try
+                {
+                    RegistryKey reg = Registry.ClassesRoot.OpenSubKey("*\\shell\\Checksum\\command");
+                    if (reg != null)
+                    {
+                        reg.Close();
+                        Registry.ClassesRoot.DeleteSubKey("*\\shell\\Checksum\\command");
+                    }
+                    reg = Registry.ClassesRoot.OpenSubKey("*\\shell\\Checksum");
+                    if (reg != null)
+                    {
+                        reg.Close();
+                        Registry.ClassesRoot.DeleteSubKey("*\\shell\\Checksum");
+                    }
+
+                    GlobalSettings.WinContextMenuEnabled = false;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(this, ex.ToString());
+                }
+            }
+
+            Application.DoEvents();
+            enableCMenuCheckBox.Checked = GlobalSettings.WinContextMenuEnabled;
+        }
+
+        static internal bool IsAdmin()
+        {
+            WindowsIdentity id = WindowsIdentity.GetCurrent();
+            WindowsPrincipal p = new WindowsPrincipal(id);
+            return p.IsInRole(WindowsBuiltInRole.Administrator);
+        }
+
+        internal static void RestartElevated(string arg)
+        {
+            ProcessStartInfo startInfo = new ProcessStartInfo();
+            startInfo.UseShellExecute = true;
+            startInfo.WorkingDirectory = Environment.CurrentDirectory;
+            startInfo.FileName = Application.ExecutablePath;
+            startInfo.Arguments = arg;
+            startInfo.Verb = "runas";
+            try
+            {
+                Process p = Process.Start(startInfo);
+            }
+            catch (System.ComponentModel.Win32Exception ex)
+            {
+                return;
+            }
+
+            Application.Exit();
         }
     }
 }

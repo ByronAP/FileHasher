@@ -51,6 +51,7 @@
             this.saveButton = new System.Windows.Forms.Button();
             this.resultTextBox = new System.Windows.Forms.TextBox();
             this.group3Label = new System.Windows.Forms.Label();
+            this.enableCMenuCheckBox = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -282,11 +283,23 @@
             this.group3Label.TabIndex = 0;
             this.group3Label.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
+            // enableCMenuCheckBox
+            // 
+            this.enableCMenuCheckBox.AutoSize = true;
+            this.enableCMenuCheckBox.Location = new System.Drawing.Point(151, 452);
+            this.enableCMenuCheckBox.Name = "enableCMenuCheckBox";
+            this.enableCMenuCheckBox.Size = new System.Drawing.Size(169, 17);
+            this.enableCMenuCheckBox.TabIndex = 3;
+            this.enableCMenuCheckBox.Text = "Enable Explorer Context Menu";
+            this.enableCMenuCheckBox.UseVisualStyleBackColor = true;
+            this.enableCMenuCheckBox.CheckedChanged += new System.EventHandler(this.enableCMenuCheckBox_CheckedChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(456, 458);
+            this.ClientSize = new System.Drawing.Size(456, 495);
+            this.Controls.Add(this.enableCMenuCheckBox);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -305,6 +318,7 @@
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -332,6 +346,7 @@
         private System.Windows.Forms.Label resultLabel;
         private System.Windows.Forms.Label compareLabel;
         private System.Windows.Forms.TextBox compareTextBox;
+        private System.Windows.Forms.CheckBox enableCMenuCheckBox;
     }
 }
 
