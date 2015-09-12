@@ -7,14 +7,15 @@ namespace FileHasher
     {
         internal static bool WinContextMenuEnabled
         {
-            get {
+            get
+            {
                 var cd = new CommonApplicationData(Application.CompanyName, Application.ProductName, true);
                 if (Directory.Exists(cd.ApplicationFolderPath) && File.Exists(cd.ApplicationFolderPath + "\\1.dat"))
                     return true;
-                else
-                    return false;
+                return false;
             }
-            set {
+            set
+            {
                 var cd = new CommonApplicationData(Application.CompanyName, Application.ProductName, true);
                 switch (value)
                 {

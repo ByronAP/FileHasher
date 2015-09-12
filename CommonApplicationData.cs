@@ -9,27 +9,29 @@ using System.Security.Principal;
 
 namespace FileHasher
 {
-    class CommonApplicationData
+    internal class CommonApplicationData
     {
-
-        private string applicationFolder;
-        private string companyFolder;
         private static readonly string directory =
             Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
 
+        private readonly string applicationFolder;
+        private readonly string companyFolder;
+
         /// <summary>
-        /// Creates a new instance of this class creating the specified company and application folders
-        /// if they don't already exist and optionally allows write/modify to all users.
+        ///     Creates a new instance of this class creating the specified company and application folders
+        ///     if they don't already exist and optionally allows write/modify to all users.
         /// </summary>
         /// <param name="companyFolder">The name of the company's folder (normally the company name).</param>
         /// <param name="applicationFolder">The name of the application's folder (normally the application name).</param>
         /// <remarks>If the application folder already exists then permissions if requested are NOT altered.</remarks>
         public CommonApplicationData(string companyFolder, string applicationFolder)
             : this(companyFolder, applicationFolder, false)
-        { }
+        {
+        }
+
         /// <summary>
-        /// Creates a new instance of this class creating the specified company and application folders
-        /// if they don't already exist and optionally allows write/modify to all users.
+        ///     Creates a new instance of this class creating the specified company and application folders
+        ///     if they don't already exist and optionally allows write/modify to all users.
         /// </summary>
         /// <param name="companyFolder">The name of the company's folder (normally the company name).</param>
         /// <param name="applicationFolder">The name of the application's folder (normally the application name).</param>
@@ -43,26 +45,21 @@ namespace FileHasher
         }
 
         /// <summary>
-        /// Gets the path of the application's data folder.
+        ///     Gets the path of the application's data folder.
         /// </summary>
-        public string ApplicationFolderPath
-        {
-            get { return Path.Combine(CompanyFolderPath, applicationFolder); }
-        }
+        public string ApplicationFolderPath => Path.Combine(CompanyFolderPath, applicationFolder);
+
         /// <summary>
-        /// Gets the path of the company's data folder.
+        ///     Gets the path of the company's data folder.
         /// </summary>
-        public string CompanyFolderPath
-        {
-            get { return Path.Combine(directory, companyFolder); }
-        }
+        public string CompanyFolderPath => Path.Combine(directory, companyFolder);
 
         private void CreateFolders(bool allUsers)
         {
             DirectoryInfo directoryInfo;
             DirectorySecurity directorySecurity;
             AccessRule rule;
-            SecurityIdentifier securityIdentifier = new SecurityIdentifier
+            var securityIdentifier = new SecurityIdentifier
                 (WellKnownSidType.BuiltinUsersSid, null);
             if (!Directory.Exists(CompanyFolderPath))
             {
@@ -70,11 +67,11 @@ namespace FileHasher
                 bool modified;
                 directorySecurity = directoryInfo.GetAccessControl();
                 rule = new FileSystemAccessRule(
-                        securityIdentifier,
-                        FileSystemRights.Write |
-                        FileSystemRights.ReadAndExecute |
-                        FileSystemRights.Modify,
-                        AccessControlType.Allow);
+                    securityIdentifier,
+                    FileSystemRights.Write |
+                    FileSystemRights.ReadAndExecute |
+                    FileSystemRights.Modify,
+                    AccessControlType.Allow);
                 directorySecurity.ModifyAccessRule(AccessControlModification.Add, rule, out modified);
                 directoryInfo.SetAccessControl(directorySecurity);
             }
@@ -99,14 +96,14 @@ namespace FileHasher
                 }
             }
         }
+
         /// <summary>
-        /// Returns the path of the application's data folder.
+        ///     Returns the path of the application's data folder.
         /// </summary>
         /// <returns>The path of the application's data folder.</returns>
         public override string ToString()
         {
             return ApplicationFolderPath;
         }
-
     }
 }
